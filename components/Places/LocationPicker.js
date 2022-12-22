@@ -1,9 +1,13 @@
 import {StyleSheet, View} from 'react-native';
 import {Colors} from '../../constants/colors';
 import OutlinedButton from '../ui/OutlinedButton';
+import GetLocation from 'react-native-get-location';
 
 export default function LocationPicker() {
-  function getLocationHandler() {}
+  async function getLocationHandler() {
+    const location = await GetLocation.getCurrentPosition();
+    console.log(location);
+  }
 
   function pickOnMaphandler() {}
 
