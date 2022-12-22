@@ -4,9 +4,11 @@ import OutlinedButton from '../ui/OutlinedButton';
 import GetLocation from 'react-native-get-location';
 import {useState} from 'react';
 import {getMapPreview} from '../../util/location';
+import {useNavigation} from '@react-navigation/core';
 
 export default function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState();
+  const navigation = useNavigation();
 
   async function getLocationHandler() {
     const location = await GetLocation.getCurrentPosition();
@@ -16,7 +18,9 @@ export default function LocationPicker() {
     });
   }
 
-  function pickOnMaphandler() {}
+  function pickOnMaphandler() {
+    navigation.navigate('Map');
+  }
 
   let locationPreview = <Text>No location picked yet.</Text>;
 
