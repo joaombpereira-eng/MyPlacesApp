@@ -1,19 +1,38 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image, Text} from 'react-native';
 import {Colors} from '../../constants/colors';
 import OutlinedButton from '../ui/OutlinedButton';
 import GetLocation from 'react-native-get-location';
+import {useState} from 'react';
+import {getMapPreview} from '../../util/location';
 
 export default function LocationPicker() {
+  const [pickedLocation, setPickedLocation] = useState();
+
   async function getLocationHandler() {
     const location = await GetLocation.getCurrentPosition();
-    console.log(location);
+    setPickedLocation({
+      lat: location.latitude,
+      lng: location.longitude,
+    });
   }
 
   function pickOnMaphandler() {}
 
+  let locationPreview = <Text>No location picked yet.</Text>;
+
+  if (pickedLocation) {
+    locationPreview = (
+      <Image
+        style={styles.image}
+        source={{uri: getMapPreview(pickedLocation.lat, pickedLocation.lng)}}
+      />
+    );
+    console.log(getMapPreview(pickedLocation.lat, pickedLocation.lng));
+  }
+
   return (
     <View>
-      <View style={styles.mapPreview}></View>
+      <View style={styles.mapPreview}>{locationPreview}</View>
       <View style={styles.actions}>
         <OutlinedButton icon="location" onPress={getLocationHandler}>
           Locate User
@@ -40,5 +59,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 4,
   },
 });
