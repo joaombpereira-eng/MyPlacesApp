@@ -1,20 +1,21 @@
-import {StatusBar, View, Text, StyleSheet} from 'react-native';
+import {StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AllPlaces from './screens/AllPlaces';
+import AddPlace from './screens/AddPlace';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <>
       <StatusBar />
-      <View style={styles.container}>
-        <Text>My Places App</Text>
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="AllPlaces" component={AllPlaces} />
+          <Stack.Screen name="AddPlace" component={AddPlace} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
