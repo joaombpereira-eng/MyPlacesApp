@@ -11,7 +11,7 @@ import {launchCamera} from 'react-native-image-picker';
 import {Colors} from '../../constants/colors';
 import OutlinedButton from '../ui/OutlinedButton';
 
-export default function ImagePicker() {
+export default function ImagePicker({onTakeImage}) {
   const [pickedImage, setPickedImage] = useState();
 
   requestCameraPermission = async () => {
@@ -62,6 +62,7 @@ export default function ImagePicker() {
         quality: 0.5,
       });
       setPickedImage(image.assets[0].uri);
+      onTakeImage(image.assets[0].uri);
     }
   }
 

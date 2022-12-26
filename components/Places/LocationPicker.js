@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react';
 import {getMapPreview} from '../../util/location';
 import {useNavigation, useRoute, useIsFocused} from '@react-navigation/core';
 
-export default function LocationPicker() {
+export default function LocationPicker({onPickLocation}) {
   const [pickedLocation, setPickedLocation] = useState();
   const isFocused = useIsFocused();
 
@@ -22,6 +22,10 @@ export default function LocationPicker() {
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    onPickLocation(pickedLocation);
+  }, [pickedLocation, onPickLocation]);
 
   async function getLocationHandler() {
     const location = await GetLocation.getCurrentPosition();
