@@ -34,7 +34,7 @@ export default function PlaceForm({onCreatePlace}) {
         <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.input}
-          onChange={changeTitleHandler}
+          onChangeText={changeTitleHandler}
           value={enteredTitle}
         />
       </View>
