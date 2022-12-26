@@ -6,10 +6,16 @@ import AddPlace from './screens/AddPlace';
 import Map from './screens/Map';
 import IconButton from './components/ui/IconButton';
 import {Colors} from './constants/colors';
+import {useEffect} from 'react';
+import {createTable} from './util/database';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    createTable();
+  }, []);
+
   return (
     <>
       <StatusBar />
