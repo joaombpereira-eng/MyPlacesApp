@@ -2,13 +2,26 @@ import {StyleSheet, View, Image, Text} from 'react-native';
 import {Colors} from '../../constants/colors';
 import OutlinedButton from '../ui/OutlinedButton';
 import GetLocation from 'react-native-get-location';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {getMapPreview} from '../../util/location';
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation, useRoute, useIsFocused} from '@react-navigation/core';
 
 export default function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState();
+  const isFocused = useIsFocused();
+
   const navigation = useNavigation();
+  const route = useRoute();
+
+  useEffect(() => {
+    if (isFocused && route.params) {
+      const mapPickedLocation = {
+        lat: route.params.pickedLat,
+        lng: route.params.pickedLng,
+      };
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
 
   async function getLocationHandler() {
     const location = await GetLocation.getCurrentPosition();
